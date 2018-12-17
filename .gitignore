@@ -1,0 +1,14 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/.idea
+.gitlab-ci.yml
+build-apk.sh
+fastlane/
+.gitlab-ci.yml

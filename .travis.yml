@@ -20,3 +20,4 @@ before_script:
 script:
 #- "./gradlew testDebugUnitTest"
 - "./build-apk.sh"
+- "./gradlew assembleDebug"

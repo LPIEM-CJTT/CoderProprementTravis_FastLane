@@ -8,6 +8,10 @@ android:
   - android-28
   - extra-google-m2repository
   - extra-android-m2repository
+  
+before_script:
+  - chmod +x gradlew
+  - chmod +x build-apk.sh
 script:
 #- "./gradlew testDebugUnitTest"
 - "./build-apk.sh"

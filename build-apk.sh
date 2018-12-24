@@ -6,7 +6,7 @@ set -x
 #VARIABLES
 apk_name=sample
 apk_extension=.apk
-apk_folder=build/apk/
+apk_folder=output/apk/
 
 ###LET'S SCRIPT###
 

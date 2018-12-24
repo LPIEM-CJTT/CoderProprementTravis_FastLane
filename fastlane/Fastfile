@@ -1,0 +1,10 @@
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+    sh "build-apk.sh"
+  end
+end

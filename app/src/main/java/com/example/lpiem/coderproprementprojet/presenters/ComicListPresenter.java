@@ -1,27 +1,26 @@
-package com.example.lpiem.coderproprementprojet.Presenters;
+package com.example.lpiem.coderproprementprojet.presenters;
 
 import android.content.Context;
 
-import com.example.lpiem.coderproprementprojet.Models.Comic;
-import com.example.lpiem.coderproprementprojet.Models.Manager;
+import com.example.lpiem.coderproprementprojet.models.Comic;
+import com.example.lpiem.coderproprementprojet.manager.ComicManager;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.subjects.PublishSubject;
 
-public class MainPresenter implements Presenter {
+public class ComicListPresenter {
 
     private Context context;
-    private Manager manager;
+    private ComicManager manager;
     public PublishSubject<ArrayList<Comic>> comics = PublishSubject.create();
 
-    public MainPresenter(Context context) {
+    public ComicListPresenter(Context context) {
         this.context = context;
-        manager = new Manager();
+        manager = new ComicManager();
     }
 
-    @Override
     public void getComicList() {
         try {
             comics.onNext(manager.getComics(context));

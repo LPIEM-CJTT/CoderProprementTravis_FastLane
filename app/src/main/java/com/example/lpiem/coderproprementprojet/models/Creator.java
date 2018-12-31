@@ -1,4 +1,4 @@
-package com.example.lpiem.coderproprementprojet.Models;
+package com.example.lpiem.coderproprementprojet.models;
 
 public class Creator {
     private String name;
@@ -7,5 +7,13 @@ public class Creator {
     public Creator(String name, String role) {
         this.name = name;
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

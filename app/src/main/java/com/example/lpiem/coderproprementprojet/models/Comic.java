@@ -1,4 +1,4 @@
-package com.example.lpiem.coderproprementprojet.Models;
+package com.example.lpiem.coderproprementprojet.models;
 
 import java.util.ArrayList;
 
@@ -65,7 +65,7 @@ public class Comic {
         return image;
     }
 
-    public ArrayList getCreators() {
+    public ArrayList<Creator> getCreators() {
         return creators;
     }
 }

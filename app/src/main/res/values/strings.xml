@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CoderProprementProjet</string>
+
+    <!-- Main Activity -->
+    <string name="toast_list_error">Erreur : La liste n\'a pas pu être chargée</string>
+
+    <!--Comic Details -->
+    <string name="toast_comic_error">Erreur : Le comic n\'a pas pu être chargé</string>
+
+    <string name="tv_informations_comic_details">Informations</string>
+    <string name="tv_credits_comic_details">Crédits</string>
+
 </resources>

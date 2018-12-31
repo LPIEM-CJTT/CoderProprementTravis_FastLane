@@ -1,23 +1,23 @@
-package com.example.lpiem.coderproprementprojet.Adapter;
+package com.example.lpiem.coderproprementprojet.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.lpiem.coderproprementprojet.Models.Comic;
+import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.R;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.ArrayList;
+
+import io.reactivex.subjects.PublishSubject;
 
 public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.MyViewHolder> {
 
     private ArrayList<Comic> comicsList;
-    private Context context;
+    public PublishSubject<Integer> clickItemListener = PublishSubject.create();
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, date, pageCount;
@@ -29,7 +29,6 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
             title = (TextView) view.findViewById(R.id.title_comic_item);
             date = (TextView) view.findViewById(R.id.date_comic_item);
             pageCount = (TextView) view.findViewById(R.id.number_page_comic_item);
-            context = view.getContext();
         }
     }
 
@@ -52,6 +51,12 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
         holder.title.setText(comic.getTitle());
         holder.date.setText(comic.getDate());
         holder.pageCount.setText(String.valueOf(comic.getPageCount()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickItemListener.onNext(position);
+            }
+        });
     }
 
     @Override

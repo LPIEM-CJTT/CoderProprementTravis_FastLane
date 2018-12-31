@@ -1,8 +1,11 @@
-package com.example.lpiem.coderproprementprojet.Models;
+package com.example.lpiem.coderproprementprojet.dataSource;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
+
+import com.example.lpiem.coderproprementprojet.models.Comic;
+import com.example.lpiem.coderproprementprojet.models.Creator;
+import com.example.lpiem.coderproprementprojet.models.MyTaskParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,8 +20,8 @@ public class ParsingFileTask extends AsyncTask<MyTaskParams, Integer, ArrayList>
 
     @Override
     protected ArrayList doInBackground(MyTaskParams... params) {
-        String filePath = params[0].filePath;
-        Context context = params[0].context;
+        String filePath = params[0].getFilePath();
+        Context context = params[0].getContext();
         String jsonFile = null;
         ArrayList<Comic> comics =  new ArrayList();
         try {
@@ -38,7 +41,6 @@ public class ParsingFileTask extends AsyncTask<MyTaskParams, Integer, ArrayList>
 
                 ArrayList creators = new ArrayList<Creator>();
                 JSONObject creator = null;
-                Log.d("cacao", "test");
                 for (int j = 0; j < jsonComicCreators.length(); j++) {
 
                     creator = jsonComicCreators.getJSONObject(j);

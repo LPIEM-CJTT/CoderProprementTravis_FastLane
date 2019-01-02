@@ -32,4 +32,7 @@ public class ComicDetailsPresenter {
         }
     }
 
+    public ComicManager getManager() {
+        return manager;
+    }
 }

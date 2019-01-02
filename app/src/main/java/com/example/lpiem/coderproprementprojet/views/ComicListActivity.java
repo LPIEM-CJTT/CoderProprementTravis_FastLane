@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.lpiem.coderproprementprojet.adapter.ComicsListAdapter;
@@ -32,7 +33,7 @@ public class ComicListActivity extends AppCompatActivity {
 
         presenter = new ComicListPresenter(this);
 
-        mAdapter = new ComicsListAdapter(comicsList);
+        mAdapter = new ComicsListAdapter(comicsList, presenter.getManager());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -1,5 +1,7 @@
 package com.example.lpiem.coderproprementprojet.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Comic {
@@ -62,6 +64,7 @@ public class Comic {
     }
 
     public String getImage() {
+        Log.d("LOADPicture", "ICI Getter");
         return image;
     }
 

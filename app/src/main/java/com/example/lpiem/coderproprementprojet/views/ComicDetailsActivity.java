@@ -20,6 +20,9 @@ import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
 import com.example.lpiem.coderproprementprojet.R;
 import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
+import java.util.concurrent.ExecutionException;
+
 public class ComicDetailsActivity extends AppCompatActivity {
 
     private ComicDetailsPresenter presenter;
@@ -59,7 +62,15 @@ public class ComicDetailsActivity extends AppCompatActivity {
         date.setText(comic.getDate());
         informations.setText(getInformations(comic));
         creators.setText(getCreators(comic));
-        Picasso.get().load(comic.getImage()).into(imageComic);
+        try {
+            imageComic.setImageDrawable(presenter.getManager().getComicPicture(comic.getImage()));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getCreators(Comic comic) {

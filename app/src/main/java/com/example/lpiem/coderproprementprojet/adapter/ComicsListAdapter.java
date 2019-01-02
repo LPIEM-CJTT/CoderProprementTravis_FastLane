@@ -1,22 +1,30 @@
 package com.example.lpiem.coderproprementprojet.adapter;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.lpiem.coderproprementprojet.manager.ComicManager;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.R;
+import com.example.lpiem.coderproprementprojet.presenters.ComicListPresenter;
 import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import io.reactivex.subjects.PublishSubject;
 
 public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.MyViewHolder> {
 
     private ArrayList<Comic> comicsList;
+    private ComicManager comicManager;
     public PublishSubject<Integer> clickItemListener = PublishSubject.create();
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -32,9 +40,9 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
         }
     }
 
-
-    public ComicsListAdapter(ArrayList<Comic> comicsList) {
+    public ComicsListAdapter(ArrayList<Comic> comicsList, ComicManager comicManager) {
         this.comicsList = comicsList;
+        this.comicManager = comicManager;
     }
 
     @Override
@@ -47,7 +55,15 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Comic comic = comicsList.get(position);
-        Picasso.get().load(comic.getImage()).into(holder.image);
+        try {
+            holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         holder.title.setText(comic.getTitle());
         holder.date.setText(comic.getDate());
         holder.pageCount.setText(String.valueOf(comic.getPageCount()));

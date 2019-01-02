@@ -30,4 +30,8 @@ public class ComicListPresenter {
             comics.onError(e);
         }
     }
+
+    public ComicManager getManager() {
+        return manager;
+    }
 }

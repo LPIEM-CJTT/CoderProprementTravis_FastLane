@@ -16,7 +16,12 @@ import com.example.lpiem.coderproprementprojet.presenters.ComicListPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.subjects.PublishSubject;
@@ -55,6 +60,7 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Comic comic = comicsList.get(position);
+
         try {
             holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
         } catch (ExecutionException e) {
@@ -65,7 +71,7 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
             e.printStackTrace();
         }
         holder.title.setText(comic.getTitle());
-        holder.date.setText(comic.getDate());
+        holder.date.setText(formatComicDate(comic));
         holder.pageCount.setText(String.valueOf(comic.getPageCount()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,21 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
                 clickItemListener.onNext(position);
             }
         });
+    }
+
+    private String formatComicDate(Comic comic) {
+        SimpleDateFormat simpleDateFormatInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        Date date = new Date();
+        try {
+            date = simpleDateFormatInput.parse(comic.getDate());
+            Log.d("DateFormatter", "ICI");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
+        Log.d("DateFormatter", "New Simple DateFormatter");
+        return simpleDateFormatOutput.format(date);
     }
 
     @Override

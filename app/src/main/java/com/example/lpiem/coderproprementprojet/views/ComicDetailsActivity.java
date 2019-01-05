@@ -32,6 +32,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
 
     private ComicDetailsPresenter presenter;
     private Integer itemPosition;
+    private ErrorDisplayer errorDisplayer;
     @BindView(R.id.tv_title_details_comic) TextView title;
     @BindView(R.id.tv_description_details_comic) TextView description;
     @BindView(R.id.tv_date_details_comic) TextView date;
@@ -48,13 +49,14 @@ public class ComicDetailsActivity extends AppCompatActivity {
 
         itemPosition = getIntent().getIntExtra(Intent.EXTRA_UID, -1);
 
+        errorDisplayer = new ErrorDisplayer(this);
 
         presenter = new ComicDetailsPresenter(this, itemPosition);
 
         presenter.comic.subscribe(
                 comic -> { displayComic(comic); },
                 error -> {
-                    Toast.makeText(this, getString(R.string.toast_comic_error), Toast.LENGTH_LONG).show();
+                    errorDisplayer.DisplayError(getString(R.string.toast_comic_error),0);
                 }
         );
 

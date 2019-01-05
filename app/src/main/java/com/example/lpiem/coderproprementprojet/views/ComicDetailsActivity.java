@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
 import com.example.lpiem.coderproprementprojet.R;
@@ -46,6 +47,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         itemPosition = getIntent().getIntExtra(Intent.EXTRA_UID, -1);
+
 
         presenter = new ComicDetailsPresenter(this, itemPosition);
 

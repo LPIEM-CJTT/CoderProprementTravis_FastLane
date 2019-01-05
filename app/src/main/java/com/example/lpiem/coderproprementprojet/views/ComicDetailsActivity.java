@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comic_details);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         itemPosition = getIntent().getIntExtra(Intent.EXTRA_UID, -1);
 
@@ -102,5 +104,13 @@ public class ComicDetailsActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
         Log.d("DateFormatter", "New Simple DateFormatter");
         return simpleDateFormatOutput.format(date);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

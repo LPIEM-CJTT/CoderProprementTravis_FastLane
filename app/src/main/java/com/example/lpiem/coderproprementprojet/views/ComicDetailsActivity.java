@@ -131,11 +131,11 @@ public class ComicDetailsActivity extends AppCompatActivity {
         return textCreators;
     }
 
-    private String getInformations(Comic comic) {
+    public String getInformations(Comic comic) {
         return comic.getPrice() + ", " + comic.getPageCount() + " - " + comic.getDiamondCode();
     }
 
-    private String formatComicDate(Comic comic) {
+    public String formatComicDate(Comic comic) {
         SimpleDateFormat simpleDateFormatInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         Date date = new Date();
         try {

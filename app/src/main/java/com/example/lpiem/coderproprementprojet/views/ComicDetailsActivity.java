@@ -1,8 +1,12 @@
 package com.example.lpiem.coderproprementprojet.views;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,12 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import android.widget.Toolbar;
+import com.example.lpiem.coderproprementprojet.R;
 import com.example.lpiem.coderproprementprojet.error.ErrorDisplayer;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
-import com.example.lpiem.coderproprementprojet.R;
-import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.text.DateFormatSymbols;
@@ -28,24 +31,27 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 public class ComicDetailsActivity extends AppCompatActivity {
 
     private ComicDetailsPresenter presenter;
+    private Comic shareComic;
     private Integer itemPosition;
     private ErrorDisplayer errorDisplayer;
-    @BindView(R.id.tv_title_details_comic)
-    TextView title;
-    @BindView(R.id.tv_description_details_comic)
-    TextView description;
-    @BindView(R.id.tv_date_details_comic)
-    TextView date;
-    @BindView(R.id.tv_price_page_diamond_details_comic)
-    TextView informations;
-    @BindView(R.id.tv_creators_details_comic)
-    TextView creators;
-    @BindView(R.id.iv_details_comic)
-    ImageView imageComic;
+    @BindView(R.id.tv_title_details_comic) TextView title;
+    @BindView(R.id.tv_description_details_comic) TextView description;
+    @BindView(R.id.tv_date_details_comic) TextView date;
+    @BindView(R.id.tv_price_page_diamond_details_comic) TextView informations;
+    @BindView(R.id.tv_creators_details_comic) TextView creators;
+    @BindView(R.id.iv_details_comic) ImageView imageComic;
+    private Toolbar toolbar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +86,35 @@ public class ComicDetailsActivity extends AppCompatActivity {
         );
 
         presenter.getComicDetails();
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.Share:
+                shareClick();
+                return true;
+            case android.R.id.home:
+                finish();
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_bar, menu);
+        return true;
+    }
+
+
+
     private void displayComic(Comic comic) {
+        shareComic = comic;
         title.setText(comic.getTitle());
         description.setText(comic.getDescription());
         date.setText(formatComicDate(comic));
@@ -124,11 +156,28 @@ public class ComicDetailsActivity extends AppCompatActivity {
         return dayName + " " + day + " " + monthName + " " + year;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+    private String shareTextFormater (){
+        String[] extraParams = new String[4];
+        extraParams[0] = getString(R.string.hey_look_at_this) + "\n";
+        extraParams[1] = shareComic.getTitle() + "\n";
+        extraParams[2] = formatComicDate(shareComic)+"\n";
+        extraParams[3] = String.valueOf(shareComic.getPrice()) + " $";
+String tmp = "";
+        for(int i = 0; i< extraParams.length;i++){
+            tmp = tmp + extraParams[i];
         }
-        return super.onOptionsItemSelected(item);
+        return  tmp;
+    }
+
+    private void shareClick()
+    {
+
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareTextFormater());
+
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share)));
     }
 }

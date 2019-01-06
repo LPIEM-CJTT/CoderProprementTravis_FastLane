@@ -64,7 +64,6 @@ public class Comic {
     }
 
     public String getImage() {
-        Log.d("LOADPicture", "ICI Getter");
         return image;
     }
 

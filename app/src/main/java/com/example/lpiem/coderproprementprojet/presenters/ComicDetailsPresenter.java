@@ -1,6 +1,7 @@
 package com.example.lpiem.coderproprementprojet.presenters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import com.example.lpiem.coderproprementprojet.manager.ComicManager;
 import com.example.lpiem.coderproprementprojet.models.Comic;
@@ -15,6 +16,7 @@ public class ComicDetailsPresenter {
     private ComicManager manager;
     private Integer itemPosition;
     public PublishSubject<Comic> comic = PublishSubject.create();
+    public PublishSubject<Drawable> image = PublishSubject.create();
 
     public ComicDetailsPresenter(Context context, Integer itemPosition) {
         this.context = context;
@@ -23,16 +25,11 @@ public class ComicDetailsPresenter {
     }
 
     public void getComicDetails() {
-        try {
-            comic.onNext(manager.getComics(context).get(itemPosition));
-        } catch (ExecutionException e) {
-            comic.onError(e);
-        } catch (InterruptedException e) {
-            comic.onError(e);
-        }
+        Comic getComic = manager.getComics(context).get(itemPosition);
+        comic.onNext(getComic);
     }
 
-    public ComicManager getManager() {
-        return manager;
+    public void getImageComicDetail(String url){
+        image.onNext(manager.getComicPicture(url));
     }
 }

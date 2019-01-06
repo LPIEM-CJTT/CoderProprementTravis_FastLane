@@ -25,8 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="iv_details_comic,tv_description_details_comic"
-            tools:layout_editor_absoluteY="69dp" />
+            app:constraint_referenced_ids="iv_details_comic,tv_description_details_comic" />
 
         <ImageView
             android:id="@+id/iv_details_comic"

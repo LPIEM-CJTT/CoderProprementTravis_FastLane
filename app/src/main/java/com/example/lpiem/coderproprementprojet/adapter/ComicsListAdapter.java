@@ -17,11 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.subjects.PublishSubject;
@@ -60,16 +63,7 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Comic comic = comicsList.get(position);
-
-        try {
-            holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
         holder.title.setText(comic.getTitle());
         holder.date.setText(formatComicDate(comic));
         holder.pageCount.setText(String.valueOf(comic.getPageCount()));
@@ -86,14 +80,20 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
         Date date = new Date();
         try {
             date = simpleDateFormatInput.parse(comic.getDate());
-            Log.d("DateFormatter", "ICI");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
-        Log.d("DateFormatter", "New Simple DateFormatter");
-        return simpleDateFormatOutput.format(date);
+        Calendar myCalendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDay());
+        int dayOfWeek = myCalendar.get(Calendar.DAY_OF_WEEK);
+        int day = Integer.parseInt(new SimpleDateFormat("dd").format(date));
+        int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
+
+        String dayName = symbols.getWeekdays()[dayOfWeek];
+        String monthName = symbols.getMonths()[date.getMonth()];
+
+        return dayName + " " + day + " " + monthName + " " + year;
     }
 
     @Override

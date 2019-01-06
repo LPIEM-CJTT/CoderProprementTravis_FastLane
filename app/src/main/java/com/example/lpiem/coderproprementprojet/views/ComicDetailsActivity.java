@@ -8,20 +8,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import android.widget.Toolbar;
 import com.example.lpiem.coderproprementprojet.R;
+import com.example.lpiem.coderproprementprojet.error.ErrorDisplayer;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
 
 import java.net.MalformedURLException;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.Nullable;
@@ -52,6 +59,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle(R.string.title_activity_detail);
 
         itemPosition = getIntent().getIntExtra(Intent.EXTRA_UID, -1);
 
@@ -60,15 +68,24 @@ public class ComicDetailsActivity extends AppCompatActivity {
         presenter = new ComicDetailsPresenter(this, itemPosition);
 
         presenter.comic.subscribe(
-                comic -> { displayComic(comic); },
+                comic -> {
+                    displayComic(comic);
+                },
                 error -> {
                     errorDisplayer.DisplayError(getString(R.string.toast_comic_error));
                 }
         );
 
+        presenter.image.subscribe(image -> {
+                    if (image != null) {
+                        imageComic.setImageDrawable(image);
+                    } else {
+                        imageComic.setImageResource(R.drawable.placeholder);
+                    }
+                }
+        );
+
         presenter.getComicDetails();
-
-
 
     }
 
@@ -103,20 +120,12 @@ public class ComicDetailsActivity extends AppCompatActivity {
         date.setText(formatComicDate(comic));
         informations.setText(getInformations(comic));
         creators.setText(getCreators(comic));
-        try {
-            imageComic.setImageDrawable(presenter.getManager().getComicPicture(comic.getImage()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        presenter.getImageComicDetail(comic.getImage());
     }
 
     private String getCreators(Comic comic) {
         String textCreators = "";
-        for(int i = 0; i < comic.getCreators().size(); i++){
+        for (int i = 0; i < comic.getCreators().size(); i++) {
             textCreators += comic.getCreators().get(i).getRole() + " : " + comic.getCreators().get(i).getName() + "\n";
         }
         return textCreators;
@@ -131,17 +140,21 @@ public class ComicDetailsActivity extends AppCompatActivity {
         Date date = new Date();
         try {
             date = simpleDateFormatInput.parse(comic.getDate());
-            Log.d("DateFormatter", "ICI");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
-        Log.d("DateFormatter", "New Simple DateFormatter");
-        return simpleDateFormatOutput.format(date);
+        Calendar myCalendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDay());
+        int dayOfWeek = myCalendar.get(Calendar.DAY_OF_WEEK);
+        int day = Integer.parseInt(new SimpleDateFormat("dd").format(date));
+        int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
+
+        String dayName = symbols.getWeekdays()[dayOfWeek];
+        String monthName = symbols.getMonths()[date.getMonth()];
+
+        return dayName + " " + day + " " + monthName + " " + year;
     }
-
-
 
     private String shareTextFormater (){
         String[] extraParams = new String[4];

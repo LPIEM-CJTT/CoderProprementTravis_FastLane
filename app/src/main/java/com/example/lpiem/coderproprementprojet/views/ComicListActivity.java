@@ -56,7 +56,7 @@ public class ComicListActivity extends AppCompatActivity {
                 }
 
         );
-        errorDisplayer.DisplayError(getString(R.string.toast_list_error));
+
         presenter.getComicList();
     }
 

@@ -2,9 +2,8 @@ package com.example.lpiem.coderproprementprojet.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
+import com.example.lpiem.coderproprementprojet.error.ErrorDisplayer;
 import com.example.lpiem.coderproprementprojet.R;
 import com.example.lpiem.coderproprementprojet.adapter.ComicsListAdapter;
 import com.example.lpiem.coderproprementprojet.models.Comic;
@@ -32,6 +31,7 @@ public class ComicListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comic_list);
         ButterKnife.bind(this);
+        setTitle(R.string.title_activity_list);
 
         presenter = new ComicListPresenter(this);
 
@@ -54,9 +54,7 @@ public class ComicListActivity extends AppCompatActivity {
                 error -> {
                     errorDisplayer.DisplayError(getString(R.string.toast_list_error));
                 }
-
         );
-
         presenter.getComicList();
     }
 

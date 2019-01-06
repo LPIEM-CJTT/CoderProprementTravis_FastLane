@@ -23,7 +23,7 @@ public class ParsingFileTask extends AsyncTask<MyTaskParams, Integer, ArrayList>
         String filePath = params[0].getFilePath();
         Context context = params[0].getContext();
         String jsonFile = null;
-        ArrayList<Comic> comics =  new ArrayList();
+        ArrayList<Comic> comics = new ArrayList<>();
         try {
             InputStream is = context.getAssets().open(filePath);
             int size = is.available();
@@ -32,6 +32,8 @@ public class ParsingFileTask extends AsyncTask<MyTaskParams, Integer, ArrayList>
             is.close();
             jsonFile = new String(buffer, "UTF-8");
             JSONObject jsonObject = new JSONObject(jsonFile);
+            int code = jsonObject.getInt("code");
+
             JSONArray jsonArray = jsonObject.getJSONArray("results");
 
 
@@ -48,7 +50,7 @@ public class ParsingFileTask extends AsyncTask<MyTaskParams, Integer, ArrayList>
                             creator.getString("role")));
                 }
 
-                comics.add( new Comic(jsonComic.getInt("id"),jsonComic.getString("title"),
+                comics.add(new Comic(jsonComic.getInt("id"), jsonComic.getString("title"),
                         jsonComic.getInt("issueNumber"), jsonComic.getString("description"),
                         jsonComic.getString("diamondCode"), jsonComic.getString("date"),
                         jsonComic.getDouble("price"), jsonComic.getInt("pageCount"),

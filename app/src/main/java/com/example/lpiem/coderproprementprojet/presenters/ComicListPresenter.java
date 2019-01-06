@@ -22,12 +22,11 @@ public class ComicListPresenter {
     }
 
     public void getComicList() {
-        try {
-            comics.onNext(manager.getComics(context));
-        } catch (ExecutionException e) {
-            comics.onError(e);
-        } catch (InterruptedException e) {
-            comics.onError(e);
+        ArrayList<Comic> listComic = manager.getComics(context);
+        if (listComic.isEmpty()) {
+            comics.onError(new Throwable("Error List"));
+        } else {
+            comics.onNext(listComic);
         }
     }
 

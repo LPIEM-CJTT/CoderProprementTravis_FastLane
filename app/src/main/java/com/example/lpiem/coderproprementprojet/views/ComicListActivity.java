@@ -1,23 +1,23 @@
 package com.example.lpiem.coderproprementprojet.views;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
+import com.example.lpiem.coderproprementprojet.R;
+import com.example.lpiem.coderproprementprojet.adapter.ComicsListAdapter;
+import com.example.lpiem.coderproprementprojet.models.Comic;
+import com.example.lpiem.coderproprementprojet.presenters.ComicListPresenter;
+
+import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
-import com.example.lpiem.coderproprementprojet.adapter.ComicsListAdapter;
-import com.example.lpiem.coderproprementprojet.models.Comic;
-import com.example.lpiem.coderproprementprojet.presenters.ComicListPresenter;
-import com.example.lpiem.coderproprementprojet.R;
-import java.util.ArrayList;
 
 public class ComicListActivity extends AppCompatActivity {
 
@@ -48,12 +48,15 @@ public class ComicListActivity extends AppCompatActivity {
         );
 
         presenter.comics.subscribe(
-                list -> { displayComics(list); },
+                list -> {
+                    displayComics(list);
+                },
                 error -> {
-                    errorDisplayer.DisplayError(getString(R.string.toast_list_error),0);
+                    errorDisplayer.DisplayError(getString(R.string.toast_list_error));
                 }
-        );
 
+        );
+        errorDisplayer.DisplayError(getString(R.string.toast_list_error));
         presenter.getComicList();
     }
 

@@ -15,6 +15,7 @@
             android:layout_marginEnd="@dimen/baseMargin"
             android:paddingBottom="@dimen/baseMargin"
             android:textAlignment="center"
+            style="@style/TitleDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,6 +56,7 @@
             android:layout_marginStart="@dimen/baseMargin"
             android:layout_marginTop="@dimen/baseMargin"
             android:text="@string/tv_informations_comic_details"
+            style="@style/infoDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/barrier_image_description" />
 
@@ -83,6 +85,7 @@
             android:layout_marginStart="@dimen/baseMargin"
             android:layout_marginTop="@dimen/baseMargin"
             android:text="@string/tv_credits_comic_details"
+            style="@style/infoDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_price_page_diamond_details_comic" />
 

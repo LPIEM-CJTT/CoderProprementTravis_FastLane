@@ -8,4 +8,28 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TitleItem">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="DateItem">
+        <item name="android:textColor">#A3A8A7</item>
+    </style>
+
+    <style name="PageItem">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="TitleDetails">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">25dp</item>
+    </style>
+
+    <style name="infoDetails">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
 </resources>

@@ -19,9 +19,13 @@ import com.example.lpiem.coderproprementprojet.R;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class ComicDetailsActivity extends AppCompatActivity {
@@ -107,8 +111,16 @@ public class ComicDetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
-        return simpleDateFormatOutput.format(date);
+        Calendar myCalendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDay());
+        int dayOfWeek = myCalendar.get(Calendar.DAY_OF_WEEK);
+        int day = Integer.parseInt(new SimpleDateFormat("dd").format(date));
+        int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
+
+        String dayName = symbols.getWeekdays()[dayOfWeek];
+        String monthName = symbols.getMonths()[date.getMonth()];
+
+        return dayName + " " + day + " " + monthName + " " + year;
     }
 
     @Override

@@ -60,16 +60,7 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Comic comic = comicsList.get(position);
-
-        try {
-            holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        holder.image.setImageDrawable(comicManager.getComicPicture(comic.getImage()));
         holder.title.setText(comic.getTitle());
         holder.date.setText(formatComicDate(comic));
         holder.pageCount.setText(String.valueOf(comic.getPageCount()));
@@ -86,13 +77,11 @@ public class ComicsListAdapter extends RecyclerView.Adapter<ComicsListAdapter.My
         Date date = new Date();
         try {
             date = simpleDateFormatInput.parse(comic.getDate());
-            Log.d("DateFormatter", "ICI");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
-        Log.d("DateFormatter", "New Simple DateFormatter");
         return simpleDateFormatOutput.format(date);
     }
 

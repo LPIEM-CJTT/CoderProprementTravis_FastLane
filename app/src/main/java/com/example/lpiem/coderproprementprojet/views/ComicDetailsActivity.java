@@ -1,23 +1,18 @@
 package com.example.lpiem.coderproprementprojet.views;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
+import com.example.lpiem.coderproprementprojet.error.ErrorDisplayer;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
 import com.example.lpiem.coderproprementprojet.R;
@@ -34,12 +29,18 @@ public class ComicDetailsActivity extends AppCompatActivity {
     private ComicDetailsPresenter presenter;
     private Integer itemPosition;
     private ErrorDisplayer errorDisplayer;
-    @BindView(R.id.tv_title_details_comic) TextView title;
-    @BindView(R.id.tv_description_details_comic) TextView description;
-    @BindView(R.id.tv_date_details_comic) TextView date;
-    @BindView(R.id.tv_price_page_diamond_details_comic) TextView informations;
-    @BindView(R.id.tv_creators_details_comic) TextView creators;
-    @BindView(R.id.iv_details_comic) ImageView imageComic;
+    @BindView(R.id.tv_title_details_comic)
+    TextView title;
+    @BindView(R.id.tv_description_details_comic)
+    TextView description;
+    @BindView(R.id.tv_date_details_comic)
+    TextView date;
+    @BindView(R.id.tv_price_page_diamond_details_comic)
+    TextView informations;
+    @BindView(R.id.tv_creators_details_comic)
+    TextView creators;
+    @BindView(R.id.iv_details_comic)
+    ImageView imageComic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,14 +57,24 @@ public class ComicDetailsActivity extends AppCompatActivity {
         presenter = new ComicDetailsPresenter(this, itemPosition);
 
         presenter.comic.subscribe(
-                comic -> { displayComic(comic); },
+                comic -> {
+                    displayComic(comic);
+                },
                 error -> {
                     errorDisplayer.DisplayError(getString(R.string.toast_comic_error));
                 }
         );
 
-        presenter.getComicDetails();
+        presenter.image.subscribe(image -> {
+                    if (image != null) {
+                        imageComic.setImageDrawable(image);
+                    } else {
+                        imageComic.setImageResource(R.drawable.placeholder);
+                    }
+                }
+        );
 
+        presenter.getComicDetails();
     }
 
     private void displayComic(Comic comic) {
@@ -72,20 +83,12 @@ public class ComicDetailsActivity extends AppCompatActivity {
         date.setText(formatComicDate(comic));
         informations.setText(getInformations(comic));
         creators.setText(getCreators(comic));
-        try {
-            imageComic.setImageDrawable(presenter.getManager().getComicPicture(comic.getImage()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        presenter.getImageComicDetail(comic.getImage());
     }
 
     private String getCreators(Comic comic) {
         String textCreators = "";
-        for(int i = 0; i < comic.getCreators().size(); i++){
+        for (int i = 0; i < comic.getCreators().size(); i++) {
             textCreators += comic.getCreators().get(i).getRole() + " : " + comic.getCreators().get(i).getName() + "\n";
         }
         return textCreators;
@@ -100,19 +103,17 @@ public class ComicDetailsActivity extends AppCompatActivity {
         Date date = new Date();
         try {
             date = simpleDateFormatInput.parse(comic.getDate());
-            Log.d("DateFormatter", "ICI");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat("dd-MM-yyyy' at 'HH:mm:ss");
-        Log.d("DateFormatter", "New Simple DateFormatter");
         return simpleDateFormatOutput.format(date);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

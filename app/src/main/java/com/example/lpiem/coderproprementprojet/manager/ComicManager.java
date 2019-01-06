@@ -2,9 +2,13 @@ package com.example.lpiem.coderproprementprojet.manager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.PictureDrawable;
 import android.util.Log;
 
+import com.example.lpiem.coderproprementprojet.R;
 import com.example.lpiem.coderproprementprojet.dataSource.LoadPictureTask;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.models.MyTaskLoadPictureParams;
@@ -19,22 +23,39 @@ import java.util.concurrent.ExecutionException;
 
 public class ComicManager {
 
-    public ArrayList<Comic> getComics(Context context) throws ExecutionException, InterruptedException {
+    private String file = "sample-ok.json";
+    //private String file = "sample-ko.json";
 
-        MyTaskParams tasks = new MyTaskParams(context,"sample-ok.json");
-        ParsingFileTask parsingFile =
-                new ParsingFileTask();
+    public ArrayList<Comic> getComics(Context context) {
+
+        MyTaskParams tasks = new MyTaskParams(context, file);
+        ParsingFileTask parsingFile = new ParsingFileTask();
         parsingFile.execute(tasks);
 
-        return parsingFile.get();
+        try {
+            return parsingFile.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public Drawable getComicPicture(String urlPicture) throws ExecutionException, InterruptedException, MalformedURLException {
-        URL url = new URL(urlPicture);
-        Log.d("LOADPicture", "ICI Manager");
-        LoadPictureTask loadPictureTask = new LoadPictureTask();
-        MyTaskLoadPictureParams params = new MyTaskLoadPictureParams(url);
-        loadPictureTask.execute(params);
-        return loadPictureTask.get();
+    public Drawable getComicPicture(String urlPicture) {
+        try {
+            URL url = new URL(urlPicture);
+            LoadPictureTask loadPictureTask = new LoadPictureTask();
+            MyTaskLoadPictureParams params = new MyTaskLoadPictureParams(url);
+            loadPictureTask.execute(params);
+            return loadPictureTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">CoderProprementProjet</string>
 
     <!-- Main Activity -->
@@ -9,5 +9,8 @@
 
     <string name="tv_informations_comic_details">Informations</string>
     <string name="tv_credits_comic_details">Crédits</string>
+    <string name="share" tools:ignore="ExtraTranslation">Partager</string>
+    <string name="hey_look_at_this">Hey regarde :</string>
+
 
 </resources>

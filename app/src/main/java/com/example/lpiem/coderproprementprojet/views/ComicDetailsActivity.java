@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class ComicDetailsActivity extends AppCompatActivity {
 
     private ComicDetailsPresenter presenter;
+    private Comic shareComic;
     private Integer itemPosition;
     private ErrorDisplayer errorDisplayer;
     @BindView(R.id.tv_title_details_comic) TextView title;
@@ -67,6 +68,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
     }
 
     private void displayComic(Comic comic) {
+        shareComic = comic;
         title.setText(comic.getTitle());
         description.setText(comic.getDescription());
         date.setText(formatComicDate(comic));
@@ -116,5 +118,30 @@ public class ComicDetailsActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String shareTextFormater (){
+        String[] extraParams = new String[4];
+        extraParams[0] = getString(R.string.hey_look_at_this) + "\n";
+        extraParams[1] = shareComic.getTitle() + "\n";
+        extraParams[2] = formatComicDate(shareComic)+"\n";
+        extraParams[3] = String.valueOf(shareComic.getPrice()) + " $";
+String tmp = "";
+        for(int i = 0; i< extraParams.length;i++){
+            tmp = tmp + extraParams[i];
+        }
+        return  tmp;
+    }
+
+    public void  shareClick(View v)
+    {
+
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareTextFormater());
+
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share)));
     }
 }

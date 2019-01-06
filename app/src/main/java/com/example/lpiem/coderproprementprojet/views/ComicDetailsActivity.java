@@ -56,7 +56,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         presenter.comic.subscribe(
                 comic -> { displayComic(comic); },
                 error -> {
-                    errorDisplayer.DisplayError(getString(R.string.toast_comic_error),0);
+                    errorDisplayer.DisplayError(getString(R.string.toast_comic_error));
                 }
         );
 

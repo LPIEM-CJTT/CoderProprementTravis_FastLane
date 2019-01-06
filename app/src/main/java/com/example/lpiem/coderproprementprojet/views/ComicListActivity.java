@@ -31,6 +31,7 @@ public class ComicListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comic_list);
         ButterKnife.bind(this);
+        setTitle(R.string.title_activity_list);
 
         presenter = new ComicListPresenter(this);
 

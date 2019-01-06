@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">CoderProprementProjet</string>
 
+    <string name="title_activity_list">Liste des comics</string>
+    <string name="title_activity_detail">Comic</string>
+
     <!-- Main Activity -->
     <string name="toast_list_error">Erreur : La liste n\'a pas pu être chargée</string>
 

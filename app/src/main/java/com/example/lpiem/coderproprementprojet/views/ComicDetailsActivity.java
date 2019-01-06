@@ -53,6 +53,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle(R.string.title_activity_detail);
 
         itemPosition = getIntent().getIntExtra(Intent.EXTRA_UID, -1);
 

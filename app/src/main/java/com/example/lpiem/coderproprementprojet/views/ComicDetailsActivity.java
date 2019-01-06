@@ -1,27 +1,22 @@
 package com.example.lpiem.coderproprementprojet.views;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.Toolbar;
 
 import com.example.lpiem.coderproprementprojet.Error.ErrorDisplayer;
+import com.example.lpiem.coderproprementprojet.R;
 import com.example.lpiem.coderproprementprojet.models.Comic;
 import com.example.lpiem.coderproprementprojet.presenters.ComicDetailsPresenter;
-import com.example.lpiem.coderproprementprojet.R;
-import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -29,6 +24,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 public class ComicDetailsActivity extends AppCompatActivity {
 
     private ComicDetailsPresenter presenter;
@@ -41,7 +41,10 @@ public class ComicDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_price_page_diamond_details_comic) TextView informations;
     @BindView(R.id.tv_creators_details_comic) TextView creators;
     @BindView(R.id.iv_details_comic) ImageView imageComic;
+    private Toolbar toolbar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,31 @@ public class ComicDetailsActivity extends AppCompatActivity {
 
         presenter.getComicDetails();
 
+
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.Share:
+                shareClick();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_bar, menu);
+        return true;
+    }
+
+
 
     private void displayComic(Comic comic) {
         shareComic = comic;
@@ -112,13 +139,7 @@ public class ComicDetailsActivity extends AppCompatActivity {
         return simpleDateFormatOutput.format(date);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     private String shareTextFormater (){
         String[] extraParams = new String[4];
@@ -133,7 +154,7 @@ String tmp = "";
         return  tmp;
     }
 
-    public void  shareClick(View v)
+    private void shareClick()
     {
 
 

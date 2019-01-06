@@ -4,129 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/tv_title_details_comic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="@dimen/baseMargin"
+            android:layout_marginEnd="@dimen/baseMargin"
+            android:paddingBottom="@dimen/baseMargin"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_image_description"
             android:layout_width="wrap_content"
-            android:background="#00aaaaaa"
-            android:layout_gravity="right"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="iv_details_comic,tv_description_details_comic" />
 
-            <Button
-                android:text="Delete"
-                android:layout_width="wrap_content"
-                android:background="#000"
-                android:textColor="#fff"
-                android:layout_height="wrap_content"
-                android:textSize="16dp" />
+        <ImageView
+            android:id="@+id/iv_details_comic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_description_details_comic"
+            app:layout_constraintEnd_toStartOf="@id/tv_description_details_comic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_details_comic" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_description_details_comic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/baseMargin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_details_comic"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_details_comic" />
 
-    </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/tv_informations_details_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="@dimen/baseMargin"
+            android:text="@string/tv_informations_comic_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier_image_description" />
 
-    <TextView
-        android:id="@+id/tv_title_details_comic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="@dimen/baseMargin"
-        android:layout_marginEnd="@dimen/baseMargin"
-        android:paddingBottom="@dimen/baseMargin"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_date_details_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_informations_details_comic" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier_image_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="iv_details_comic,tv_description_details_comic" />
+        <TextView
+            android:id="@+id/tv_price_page_diamond_details_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_details_comic" />
 
-    <ImageView
-        android:id="@+id/iv_details_comic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_description_details_comic"
-        app:layout_constraintEnd_toStartOf="@id/tv_description_details_comic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_details_comic" />
+        <TextView
+            android:id="@+id/tv_credits_details_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="@dimen/baseMargin"
+            android:text="@string/tv_credits_comic_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_page_diamond_details_comic" />
 
-    <TextView
-        android:id="@+id/tv_description_details_comic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="@dimen/baseMargin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_details_comic"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_details_comic" />
-
-    <TextView
-        android:id="@+id/tv_informations_details_comic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="@dimen/baseMargin"
-        android:text="@string/tv_informations_comic_details"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_image_description" />
-
-    <TextView
-        android:id="@+id/tv_date_details_comic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_informations_details_comic" />
-
-    <TextView
-        android:id="@+id/tv_price_page_diamond_details_comic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_date_details_comic" />
-
-    <TextView
-        android:id="@+id/tv_credits_details_comic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="@dimen/baseMargin"
-        android:text="@string/tv_credits_comic_details"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_price_page_diamond_details_comic" />
-
-    <TextView
-        android:id="@+id/tv_creators_details_comic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/baseMargin"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_credits_details_comic" />
+        <TextView
+            android:id="@+id/tv_creators_details_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/baseMargin"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_credits_details_comic" />
 
     <Button
         android:id="@+id/ShareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Button"
         android:onClick="shareClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,6 +79,8 @@ public class ComicDetailsActivity extends AppCompatActivity {
             case R.id.Share:
                 shareClick();
                 return true;
+            case android.R.id.home:
+                finish();
 
             default:
                 return super.onOptionsItemSelected(item);
